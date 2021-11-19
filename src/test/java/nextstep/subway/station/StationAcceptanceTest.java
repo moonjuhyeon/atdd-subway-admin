@@ -22,12 +22,13 @@ import nextstep.subway.station.dto.StationResponse;
 @DisplayName("지하철역 관련 기능")
 public class StationAcceptanceTest extends AcceptanceTest {
 
-	private static final StationRequest 강남역_생성_요청값 = new StationRequest("강남역");
-	private static final StationRequest 역삼역_생성_요청값 = new StationRequest("역삼역");
+	public static final StationRequest 강남역_생성_요청값 = new StationRequest("강남역");
+	public static final StationRequest 역삼역_생성_요청값 = new StationRequest("역삼역");
+	public static final StationRequest 광교역_생성_요청값 = new StationRequest("광교역");
+	public static final StationRequest 성수역_생성_요청값 = new StationRequest("성수역");
 	private static final String STATION_PATH = "/stations";
-	private static final String SLASH = "/";
 
-	ExtractableResponse<Response> 지하철역_생성_요청(StationRequest params) {
+	public static ExtractableResponse<Response> 지하철역_생성_요청(StationRequest params) {
 		return RestAssured.given().log().all()
 			.body(params)
 			.contentType(MediaType.APPLICATION_JSON_VALUE)

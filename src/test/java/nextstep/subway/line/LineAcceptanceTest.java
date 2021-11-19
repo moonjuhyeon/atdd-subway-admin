@@ -19,14 +19,13 @@ import io.restassured.response.Response;
 import nextstep.subway.AcceptanceTest;
 import nextstep.subway.line.dto.LineRequest;
 import nextstep.subway.line.dto.LineResponse;
-import nextstep.subway.station.dto.StationRequest;
+import nextstep.subway.station.StationAcceptanceTest;
 import nextstep.subway.station.dto.StationResponse;
 
 @DisplayName("지하철 노선 관련 기능")
 public class LineAcceptanceTest extends AcceptanceTest {
 
 	private static final String LINE_PATH = "/lines";
-	private static final String STATION_PATH = "/stations";
 	private static final String SLASH = "/";
 	private static StationResponse 강남역;
 	private static StationResponse 광교역;
@@ -34,31 +33,9 @@ public class LineAcceptanceTest extends AcceptanceTest {
 
 	@BeforeEach
 	void setup() {
-		강남역 = 지하철역이_등록되어있음(강남역_생성_요청값());
-		광교역 = 지하철역이_등록되어있음(광교역_생성_요청값());
-		성수역 = 지하철역이_등록되어있음(성수역_생성_요청값());
-	}
-
-	private StationResponse 지하철역이_등록되어있음(StationRequest params) {
-		return RestAssured
-			.given().log().all()
-			.body(params)
-			.contentType(MediaType.APPLICATION_JSON_VALUE)
-			.when()
-			.post(STATION_PATH)
-			.then().log().all().extract().as(StationResponse.class);
-	}
-
-	StationRequest 강남역_생성_요청값() {
-		return new StationRequest("강남역");
-	}
-
-	StationRequest 광교역_생성_요청값() {
-		return new StationRequest("광교역");
-	}
-
-	StationRequest 성수역_생성_요청값() {
-		return new StationRequest("성수역");
+		강남역 = StationAcceptanceTest.지하철역_생성_요청(StationAcceptanceTest.강남역_생성_요청값).as(StationResponse.class);
+		광교역 = StationAcceptanceTest.지하철역_생성_요청(StationAcceptanceTest.광교역_생성_요청값).as(StationResponse.class);
+		성수역 = StationAcceptanceTest.지하철역_생성_요청(StationAcceptanceTest.성수역_생성_요청값).as(StationResponse.class);
 	}
 
 	LineRequest 이호선_생성_요청값(StationResponse upStation, StationResponse downStation) {
